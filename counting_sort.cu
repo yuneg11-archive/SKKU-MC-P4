@@ -46,9 +46,20 @@ __host__ void counting_sort(int arr[], int size, int max_val) {
 
     cudaMemcpy(histogram, histogram_device, histogram_len * sizeof(int), cudaMemcpyDeviceToHost);
 
-    for (int idx = 0, i = 0; i < histogram_len; i++) {
-        for (int j = 0; j < histogram[i]; j++) {
-            arr[idx++] = i;
+    int sum = 0;
+    for (int i = 0; i < histogram_len; i++) {
+        sum += histogram[i];
+        histogram[i] = sum;
+    }
+
+    for (int j = 0; j < histogram[0]; j++) {
+        arr[j] = 0;
+    }
+    for (int i = 1; i < histogram_len; i++) {
+        int cnt = histogram[i] - histogram[i - 1];
+        int base_idx = histogram[i - 1];
+        for (int j = 0; j < cnt; j++) {
+            arr[base_idx + j] = i;
         }
     }
 
