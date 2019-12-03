@@ -4,8 +4,8 @@
 #include <time.h>
 #include <cuda_runtime.h>
 
-#define N 500000000 // 1.86 GB
-#define MAX_VAL 1000000 // 3.81 MB
+#define N INT_MAX // 8 GB (= 2,147,483,648 * 4 Byte)
+#define MAX_VAL INT_MAX // 8 GB (= 2,147,483,648 * 4 Byte)
 
 extern void counting_sort(int arr[], int size, int max_val);
 void host_counting_sort(int arr[], int size, int max_val) {
